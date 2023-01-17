@@ -10,6 +10,7 @@ const Haeder = ({ carrinho, home, trocaTela, Slogan}) => {
         <Section>
 
                 <ImgSlogan src={Slogan}></ImgSlogan>
+                
             <Ul>
 
                 <Nav> 

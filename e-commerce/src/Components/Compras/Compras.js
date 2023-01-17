@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Ul, Li, Img, SectionCompras, Button, Div, ButtonCompra  } from "./style";
 
-const Compras = (lista, setLista, soma,setSoma ) => {
+const Compras = (lista, setLista ) => {
     
     const [removeItem, setRemoveItem] = useState()
     const [novoItem, setNovoItem] = useState();
@@ -15,42 +15,41 @@ const Compras = (lista, setLista, soma,setSoma ) => {
             novaLista.push(novoItem)
         }else{
             item.quantidade = item.quantidade +1
-            item.precoCompra = item.preco * item.quantidade
+            item.precoCompra = (item.preco * item.quantidade).toFixed(2)
         }
 
         lista.setLista(novaLista)
 
         localStorage.setItem("carrinho", JSON.stringify(lista.lista))
-        localStorage.setItem("soma", JSON.stringify(lista.soma))  
          
     }
-
+    
     const removeLista = () => {
         
         const novaLista = [...lista.lista];
         const item = novaLista.find((produto) => produto.id === removeItem.id)
         
         if (item.quantidade > 1) {
-            item.quantidade = item.quantidade -1
-            item.precoCompra  = item.precoCompra  - item.preco
+            item.quantidade = item.quantidade - 1
+            item.precoCompra  = (item.precoCompra  - item.preco).toFixed(2)
             lista.setLista(novaLista)
+            
         }else{
             const filtrandoLista = novaLista.filter((produto) => produto.id !== removeItem.id)
             lista.setLista(filtrandoLista)
+            item.precoCompra  = (item.precoCompra  - item.preco).toFixed(2)
         }
-
+        
         localStorage.setItem("carrinho", JSON.stringify(lista.lista))
-        localStorage.setItem("soma", JSON.stringify(lista.soma))  
     }
     
     const removendoItem = (produto) => {
-
+        
         setRemoveItem(produto)
-        lista.setSoma(lista.soma - produto.preco)
     }
     const adicionaMaisItem = (produto) =>{
-        setNovoItem(produto)
-        lista.setSoma(lista.soma + produto.preco)
+        
+        setNovoItem(produto)  
     }
     
     const finalizarCompra = () => {
@@ -60,12 +59,6 @@ const Compras = (lista, setLista, soma,setSoma ) => {
     useEffect(() => {
         localStorage.setItem("carrinho", JSON.stringify(lista.lista))   
         lista.setLista(JSON.parse(localStorage.getItem("carrinho")))
-    },[])
-
-    useEffect(()=>{
-        
-        localStorage.setItem("soma", JSON.stringify(lista.soma))  
-        lista.setSoma(JSON.parse(localStorage.getItem("soma")))
     },[])
 
     return(
@@ -94,7 +87,6 @@ const Compras = (lista, setLista, soma,setSoma ) => {
             </SectionCompras>
             
             <Div>
-                {lista.soma < 1 ? <p>0</p> : <p>{lista.soma}</p>}
                 <ButtonCompra onClick={finalizarCompra}>Finalizar</ButtonCompra>
             </Div>
             

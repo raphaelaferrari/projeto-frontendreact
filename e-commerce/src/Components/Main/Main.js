@@ -3,7 +3,7 @@ import CampoDeBusca from '../CampoDeBusca/CampoDeBusca';
 import Filtros from '../Filtros/Filtros';
 import { SectionProdutos, Ul, Li, Img, Button} from './style';
 
-const Main = ({produtos, lista, setLista, novoItem, setNovoItem, soma, setSoma }) => {
+const Main = ({produtos, lista, setLista, novoItem, setNovoItem, soma, setSoma}) => {
 
     const [busca, setBusca] =  useState("");
 
@@ -13,6 +13,7 @@ const Main = ({produtos, lista, setLista, novoItem, setNovoItem, soma, setSoma }
 
     const [valorMinimo, setValorMinimo] = useState("");
 
+    
     const adicionaLista = () => {
         
         const novaLista = [...lista];
@@ -28,21 +29,17 @@ const Main = ({produtos, lista, setLista, novoItem, setNovoItem, soma, setSoma }
         setLista(novaLista)  
         
     }
-
+    
     const adicionaItem = (produto) => {
         
         produto.quantidade = + 1
         produto.precoCompra = produto.preco * produto.quantidade
-        setNovoItem(produto)   
-        setSoma(soma + produto.preco)
-        
+        setNovoItem(produto) 
     };
-
     
    return(
 
         <>
-            
             <CampoDeBusca 
             setBusca={setBusca}
             />
